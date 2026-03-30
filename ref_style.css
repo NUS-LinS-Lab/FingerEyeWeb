@@ -1,0 +1,367 @@
+html {
+  background-color: #ffffff;
+  font-size: 100%;
+}
+.hidden-news {
+  display: none;
+}
+body {
+  /*font-family: 'Lato', sans-serif !important;*/
+  font-family: 'Amarna', serif !important;
+}
+.chinese-text  {
+  font-family: 'LXGW WenKai Screen', serif;
+}
+/* Link colors */
+a:link {
+    color: #006EE7;
+}
+a:visited {
+    color: #006EE7;
+}
+a:hover {
+    color: #006EE7;
+}
+a:active {
+    color: #006EE7;
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  font-weight: lighter;
+  text-align: right;
+  color: #555;
+}
+
+.about-headshot {
+  max-width: 65%;
+}
+
+.about-headshot-mobile {
+  max-width: 50%;
+}
+
+.title-name {
+  font-family: 'Amarna', serif; 
+  font-size: 2.1em;
+  line-height: 90%;
+  font-weight:500;
+}
+.title-email {
+  font-size: 1.2rem;
+}
+.title-small{
+  font-size: 1.1rem;
+}
+
+
+.link-button {
+  font-family: 'Amarna', serif;
+  font-size: 1.5rem;
+  color: #006EE7; 
+}
+
+.link-button-small {
+  font-family: 'Amarna', serif;
+  font-size: 1.2rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  color: #006EE7;
+}
+
+.drop-shadow {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Style font awesome */
+.fa {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 30px;
+  text-align: center;
+  text-decoration: none;
+}
+.fa:hover {
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+
+/* Expand/collapsible news entries */
+
+.news-title {
+  font-family: 'Amarna', serif;
+  font-size: 1.3rem;
+  font-weight: 200;
+}
+
+.expandable-list ul {
+  list-style-type:none;
+  margin-left: 1em;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.expandable-list .extra-item {
+  display: none;
+}
+
+.news-date {
+  /* color: #E03838; */
+  display: inline-block;
+  font-weight: 500;
+  inline-size: 4em;
+  font-family: 'Amarna', serif;
+}
+
+.news-entry {
+  font-size: 0.9rem;
+}
+
+.news-expand-button {
+  cursor: pointer;
+  text-align: center;
+  margin-left: 1em;
+  color: #006EE7;
+}
+
+
+/* Content summaries */
+
+.content-header {
+  margin-bottom: 0px;
+  border-bottom-style: solid;
+  border-width: 2px;
+  text-align: right;
+}
+
+.content-header col {
+  padding-right: 0px;
+}
+
+.content-header p {
+  font-weight: bold;
+  font-size: 2.0rem;
+  margin-bottom: 0px;
+  margin-right: 0px;
+}
+
+.content-header-linebreak {
+  height: 30px;
+  margin-bottom: 15px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.summary-title {
+  font-family: 'Amarna', serif;
+  font-size: 1.3rem;
+  font-weight:500;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+.summary-authors{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.summary-publication-status {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #006EE7;
+  font-style: italic;
+}
+
+.summary-publication-status-highlight {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #49bf9d;
+  font-family: 'Amarna', serif;
+  font-style: italic;
+}
+.summary-publication-status-highlight::before {
+  content: '★ ';
+}
+.summary-publication-status-highlight::after {
+  content: ' ★';
+}
+
+.summary-publication-status-award {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #ffaf03;
+  font-family: 'Amarna', serif;
+  font-style: italic;
+}
+.summary-publication-status-award::before {
+  content: "\f091"; /* Unicode for Font Awesome trophy icon */
+  font-family: 'Amarna', 'Font Awesome 6 Free', serif;
+  font-weight: 900; /* Font Awesome solid style */
+  margin-right: 4px;
+  font-style: normal;
+}
+.summary-publication-status-award::after {
+  content: "\f091";
+  font-family: 'Amarna', 'Font Awesome 6 Free', serif;
+  font-weight: 900;
+  margin-left: 4px;
+  font-style: normal;
+}
+
+.summary-extras {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bolder;
+  background: #E0383833;
+}
+.summary-extras:hover {
+  text-decoration: none;
+}
+
+.summary-extras-btn {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: bolder;
+  color: #000;
+  background: #FFDC55;
+}
+.summary-extras-btn:visited{
+  color: #000;
+  background: #FFDC55;
+}
+
+.summary-text {
+  font-size: 1rem;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  color: #aaaaaa;
+}
+.summary-text::before {
+  content: '\f002 TL;DR: ';
+  font-family: 'Amarna','Font Awesome 6 Free', serif;
+  font-weight: 600;
+}
+.summary-image {
+  border: 0px solid #ddd;
+  border-radius: 2px;
+  padding: 3px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.badge-button {
+  font-size: 0.8rem;
+  background: hsla(217, 100%, 84%, 0.2) 4%;
+  line-height: 225%;
+  margin-right: 0.25rem;
+}
+.badge-button:hover {
+  text-decoration: none;
+}
+
+.big-badge-button {
+  font-size: 1.0rem;
+  background: hsla(217, 100%, 84%, 0.2) 4%;
+}
+.big-badge-button:hover {
+  text-decoration: none;
+}
+
+.full-title {
+  font-family: 'Amarna', serif;
+  font-size: 3em;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.authors-list {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.plain-link {
+  color: #000000 !important;
+  text-decoration: underline !important;
+}
+
+.publication-status {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 1.2em;
+  text-align: center;
+  color: #006EE7;
+}
+
+.extras {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 1.2em;
+  text-align: center;
+  color: #006EE7;
+  font-weight: bolder;
+}
+.hover {
+  text-decoration: none;
+}
+
+.big-teaser-image {
+  padding: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+	max-height: 400px;
+	max-width: auto;
+}
+
+.abstract {
+  text-align: left;
+  padding: 10px;
+}
+
+
+.selected-figure {
+  text-align: center;
+  max-height: 300px; 
+  max-width: 100%;
+  padding: 5px;
+}
+.selected-figure-caption {
+  max-width: 600px;
+}
+
+mark {
+  margin: 0.0em -0.4em;
+  padding: 0.0em 0.4em;
+  border-radius: 0.8em 0.3em;
+  background: transparent;
+  background-image: linear-gradient(
+    to right,
+    hsla(217, 100%, 84%, 0.1),
+    hsla(217, 100%, 84%, 0.5) 4%,
+    hsla(217, 100%, 84%, 0.3)
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: inherit; 
+}
+
+.career-highlight {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background-image: linear-gradient(
+    to right,
+    hsla(217, 100%, 84%, 0.05),
+    hsla(217, 100%, 84%, 0.35) 4%,
+    hsla(217, 100%, 84%, 0.2)
+  );
+  border-left: 4px solid hsla(217, 100%, 60%, 0.9);
+  font-weight: 600;
+  color: hsla(217, 100%, 60%, 1.0);   /* deep academic blue */
+}

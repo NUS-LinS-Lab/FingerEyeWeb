@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>FingerEye</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Amarna&display=swap"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="stylesheet" href="./ref_style.css">
+
+  <style>
+  .macro-ours {
+    color: #006EE7;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  </style>
+
+
+  <link rel="icon" href="./static/assets/images/sensor_assemable.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+<aside class="toc-sidebar" aria-label="Contents">
+  <div class="toc-title">Contents</div>
+  <a href="#summary-video">Summary Video</a>
+  <a href="#design">Design of FingerEye</a>
+  <a href="#capability">Robustness of Deformation Measurement</a>
+  <a href="#gallery">Gallery of Delicate Grasp Experiment</a>
+  <a href="#manipulation">Learning Dexterous Manipulation Skills with FingerEye</a>
+  <a href="#sim-aug">Simulation-Augmented Representation Learning</a>
+  <a href="#fabrication">Fabrication</a>
+  <a href="#abstract">Abstract</a>
+  <a href="#bibtex">BibTeX</a>
+</aside>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            \ours: Continuous and Unified Vision-Tactile Sensing for Dexterous Manipulation       </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://ariszxxu.github.io/">Zhixuan Xu</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              Yichen Li<sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              Xuanye Wu<sup>2,3</sup>,
+            </span>
+            <span class="author-block">
+              Tianyu Qiu<sup>2,4</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://linsats.github.io/">Lin Shao</a><sup>1,2,&dagger;</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <div>
+              <span class="author-block"><sup>1</sup>National University of Singapore</span>
+              <span class="author-block"><sup>2</sup>RoboScience</span>
+              <span class="author-block"><sup>3</sup>Huazhong University of Science and Technology</span>
+              <span class="author-block"><sup>4</sup>South China University of Technology</span>
+              <span class="author-block"><sup>&dagger;</sup>Corresponding author</span>
+            </div>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <div class="publication-links-row publication-links-row-main">
+                <span class="link-block">
+                  <a href="#" 
+                    class="external-link button is-normal is-dark personal-arc-button">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="./static/assets/FingerEye.pdf"
+                    class="external-link button is-normal is-dark personal-arc-button">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>PDF</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://docs.google.com/document/d/1jIsauCUubnpsnRZiPJ1yBQh4KIW-sTdFwxu0cdAxOfM/edit?tab=t.0"
+                    class="external-link button is-normal is-dark personal-arc-button">
+                    <span class="icon">
+                      <i class="fas fa-screwdriver-wrench"></i>
+                    </span>
+                    <span>Hardware Guide</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#"
+                    class="external-link button is-normal is-dark personal-arc-button">
+                    <span class="icon">
+                      <i class="fab fa-twitter"></i>
+                    </span>
+                    <span>Twitter</span>
+                  </a>
+                </span>
+              </div>
+
+              <div class="publication-links-row publication-links-row-codebases">
+                <span class="link-block">
+                  <a href="https://github.com/ariszxxu/FingerEyePolicy"
+                    class="external-link button is-normal is-dark personal-arc-button">
+                    <span class="icon">
+                      <i class="fas fa-code"></i>
+                    </span>
+                    <span>Code (Policy)</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/ariszxxu/FingerEyeRW"
+                    class="external-link button is-normal is-dark personal-arc-button">
+                    <span class="icon">
+                      <i class="fas fa-laptop-code"></i>
+                    </span>
+                    <span>Code (Real-World)</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/ariszxxu/FingerEyeLab"
+                    class="external-link button is-normal is-dark personal-arc-button">
+                    <span class="icon">
+                      <i class="fas fa-cubes"></i>
+                    </span>
+                    <span>Code (Sim)</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="summary-video" style="background-color: white;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Summary Video</h2>
+    <p class="has-text-centered" style="color: #7a7a7a; font-size: 0.95rem; margin-top: -6px; margin-bottom: 12px;">
+      Narration included.
+    </p>
+    <div class="columns is-centered">
+      <div class="column">
+        <video id="summary-video-player" class="surface-video" playsinline controls preload="metadata" style="width:100%; height:auto;">
+          <source src="./static/assets/videos/fingereye_summary_video.mp4#t=3" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pipeline" id="design">
+  <h2 class="title is-3 has-text-centered">Design of \ours</h2>
+  <div class="container is-max-desktop">
+    <div class="design-media-grid">
+      <article class="design-media-card">
+        <p class="design-media-label">Hardware System Overview</p>
+        <div class="design-media-frame">
+          <img class="design-overview-image" src="./static/assets/images/hardware_system_overview.png" alt="Hardware system overview">
+        </div>
+      </article>
+
+      <article class="design-media-card">
+        <p class="design-media-label">Exploded View</p>
+        <div class="design-media-frame">
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/sensor_explored_view/exploded_view_10001-0380.webm" type="video/webm">
+          </video>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<section class="pipeline" id="capability">
+  <h2 class="title is-3 has-text-centered">Robustness of Deformation Measurement</h2>
+
+  <div class="container is-max-desktop">
+
+    <div class="robustness-grid">
+
+      <article class="robustness-item">
+        <p class="title is-5">Eccentric Force Sensing</p>
+        <video autoplay muted loop playsinline style="width:100%; height:auto;">
+          <source data-src="./static/assets/videos/robustness/sensing.mp4" type="video/mp4">
+        </video>
+      </article>
+
+      <article class="robustness-item">
+        <p class="title is-5">Lateral Force Sensing</p>
+        <video autoplay muted loop playsinline style="width:100%; height:auto;">
+          <source data-src="./static/assets/videos/robustness/sensing_1.mp4" type="video/mp4">
+        </video>
+      </article>
+
+      <article class="robustness-item">
+        <p class="title is-5">Light Robustness(50% Cover)</p>
+        <video autoplay muted loop playsinline style="width:100%; height:auto;">
+          <source data-src="./static/assets/videos/robustness/light_50_cover.mp4" type="video/mp4">
+        </video>
+      </article>
+
+      <article class="robustness-item">
+        <p class="title is-5">Light Robustness(100% Cover)</p>
+        <video autoplay muted loop playsinline style="width:100%; height:auto;">
+          <source data-src="./static/assets/videos/robustness/light_100_cover.mp4" type="video/mp4">
+        </video>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="section" id="gallery">
+  <div class="container is-max-desktop">
+
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="title is-3 has-text-centered">Gallery of Delicate Grasp Experiment</h2>
+          <p class="delicate-gallery-note has-text-centered">
+            Each clip shows one target object in the delicate grasp setting.
+          </p>
+        </div>
+      </div>
+
+      <div class="delicate-gallery-grid">
+        <article class="delicate-item">
+          <p class="delicate-item-object">Balloon</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/balloon.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Chips Bag</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/chips.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Cones</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/cones.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Cookies</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/cookies.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Eggs</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/eggs.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Grape</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/grape.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Paper</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/paper.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Paper Cup</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/papercup.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Pencil</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/pencil.mp4" type="video/mp4">
+          </video>
+        </article>
+
+        <article class="delicate-item">
+          <p class="delicate-item-object">Seaweed</p>
+          <video autoplay muted loop playsinline controls preload="metadata">
+            <source data-src="./static/assets/videos/delicate_grasp_experiment/seedweeds.mp4" type="video/mp4">
+          </video>
+        </article>
+      </div>
+  
+  </div>
+
+</section>
+
+<section class="section" id="manipulation">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Learning Dexterous Manipulation Skills with<br>FingerEye</h2>
+        <div class="content has-text-centered">
+          <article class="manipulation-item">
+            <h3 class="manipulation-item-title">Coin Standing</h3>
+            <video autoplay muted loop playsinline style="width:100%; height:auto;">
+              <source data-src="./static/assets/videos/demos/coin_all_cam.mp4" type="video/mp4">
+            </video>
+          </article>
+
+          <article class="manipulation-item">
+            <h3 class="manipulation-item-title">Chip Picking</h3>
+            <video autoplay muted loop playsinline style="width:100%; height:auto;">
+              <source data-src="./static/assets/videos/demos/chips_all_cam.mp4" type="video/mp4">
+            </video>
+          </article>
+
+          <article class="manipulation-item">
+            <h3 class="manipulation-item-title">Letter Retrieving</h3>
+            <video autoplay muted loop playsinline style="width:100%; height:auto;">
+              <source data-src="./static/assets/videos/demos/letter_all_cam.mp4" type="video/mp4">
+            </video>
+          </article>
+
+          <article class="manipulation-item">
+            <h3 class="manipulation-item-title">Syringe Manipulation</h3>
+            <video autoplay muted loop playsinline style="width:100%; height:auto;">
+              <source data-src="./static/assets/videos/demos/syringe_all_cam.mp4" type="video/mp4">
+            </video>
+          </article>
+
+          <article class="manipulation-item">
+            <h3 class="manipulation-item-title">Rollout Results</h3>
+            <img src="./static/assets/images/results_barplot.png" alt="Teaser Image" style="width:100%; height:auto;">
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sim-aug">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Simulation-Augmented Representation Learning</h2>
+
+        <div class="sim-aug-method-centered">
+          <article class="sim-aug-card">
+            <h3 class="sim-aug-card-title">Method Overview</h3>
+            <img src="./static/assets/images/repr_learn.png" alt="Simulation-augmented representation learning overview" class="sim-aug-image">
+          </article>
+        </div>
+
+        <div class="sim-aug-result-full">
+          <article class="sim-aug-card">
+            <h3 class="sim-aug-card-title">Method Result</h3>
+            <img src="./static/assets/images/sim_aug_result.png" alt="Simulation-augmented representation learning result" class="sim-aug-image">
+
+            <div class="sim-aug-rollout-grid">
+              <article class="sim-aug-rollout-item">
+                <p class="sim-aug-rollout-label">Yellow</p>
+                <div class="sim-aug-rollout-video-wrap">
+                  <video autoplay muted loop playsinline controls preload="metadata" class="sim-aug-rollout-video">
+                    <source data-src="./static/assets/videos/simaug/simaug_yellow.mp4" type="video/mp4">
+                  </video>
+                  <span class="sim-aug-rollout-speed-overlay">x2.5</span>
+                </div>
+              </article>
+
+              <article class="sim-aug-rollout-item">
+                <p class="sim-aug-rollout-label">Green</p>
+                <div class="sim-aug-rollout-video-wrap">
+                  <video autoplay muted loop playsinline controls preload="metadata" class="sim-aug-rollout-video">
+                    <source data-src="./static/assets/videos/simaug/simaug_green.mp4" type="video/mp4">
+                  </video>
+                  <span class="sim-aug-rollout-speed-overlay">x3</span>
+                </div>
+              </article>
+
+              <article class="sim-aug-rollout-item">
+                <p class="sim-aug-rollout-label">Orange</p>
+                <div class="sim-aug-rollout-video-wrap">
+                  <video autoplay muted loop playsinline controls preload="metadata" class="sim-aug-rollout-video">
+                    <source data-src="./static/assets/videos/simaug/simaug_orange.mp4" type="video/mp4">
+                  </video>
+                  <span class="sim-aug-rollout-speed-overlay">x2</span>
+                </div>
+              </article>
+
+              <article class="sim-aug-rollout-item">
+                <p class="sim-aug-rollout-label">Red</p>
+                <div class="sim-aug-rollout-video-wrap">
+                  <video autoplay muted loop playsinline controls preload="metadata" class="sim-aug-rollout-video">
+                    <source data-src="./static/assets/videos/simaug/simaug_red.mp4" type="video/mp4">
+                  </video>
+                  <span class="sim-aug-rollout-speed-overlay">x2</span>
+                </div>
+              </article>
+
+              <article class="sim-aug-rollout-item">
+                <p class="sim-aug-rollout-label">Purple</p>
+                <div class="sim-aug-rollout-video-wrap">
+                  <video autoplay muted loop playsinline controls preload="metadata" class="sim-aug-rollout-video">
+                    <source data-src="./static/assets/videos/simaug/simaug_purple.mp4" type="video/mp4">
+                  </video>
+                  <span class="sim-aug-rollout-speed-overlay">x4</span>
+                </div>
+              </article>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="fabrication" style="background-color: white;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Fabrication</h2>
+    <div class="columns is-centered">
+      
+      <div class="column">
+        <video class="surface-video" muted playsinline controls preload="metadata" style="width:100%; height:auto;">
+          <source data-src="./static/assets/videos/fabrication.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Dexterous robotic manipulation requires comprehensive perception across all phases of interaction: pre-contact, contact initiation, and post-contact. Such continuous feedback allows a robot to adapt its actions throughout interaction. However, many existing tactile sensors, such as GelSight and its variants, only provide feedback after contact is established, limiting a robot's ability to precisely initiate contact. We introduce \ours, a compact and cost-effective sensor that provides continuous vision-tactile feedback throughout the interaction process. \ours integrates binocular RGB cameras to provide close-range visual perception with implicit stereo depth. Upon contact, external forces and torques deform a compliant ring structure; these deformations are captured via marker-based pose estimation and serve as a proxy for contact wrench sensing. This design enables a perception stream that smoothly transitions from pre-contact visual cues to post-contact tactile feedback. Building on this sensing capability, we develop a vision-tactile imitation learning policy that fuses signals from multiple \ours sensors to learn dexterous manipulation behaviors from limited real-world data. We further develop a digital twin of our sensor and robot platform to improve policy generalization. By combining real demonstrations with visually augmented simulated observations for representation learning, the learned policies become more robust to object appearance variations. Together, these design aspects enable dexterous manipulation across diverse object properties and interaction regimes, including coin standing, chip picking, letter retrieving, and syringe manipulation.
+          </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre>
+      <code>
+        TODO
+      </code>
+    </pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="columns is-centered">
+    <div class="column is-8 has-text-centered">
+      <div class="content">
+        <p>
+          This website is designed based on 
+          <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function makeOursNode() {
+    const span = document.createElement("span");
+    span.className = "macro-ours";
+    span.textContent = "FingerEye";
+    return span;
+  }
+
+  function renderOursMacro(root = document) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const p = node.parentElement;
+        if (!p) return NodeFilter.FILTER_REJECT;
+        const tag = p.tagName;
+        if (tag === "SCRIPT" || tag === "STYLE") return NodeFilter.FILTER_REJECT;
+        if (tag === "CODE" || tag === "PRE") return NodeFilter.FILTER_REJECT;
+        return node.nodeValue.includes("\\ours")
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT;
+      }
+    });
+
+    const targets = [];
+    while (walker.nextNode()) targets.push(walker.currentNode);
+
+    for (const textNode of targets) {
+      const parts = textNode.nodeValue.split("\\ours");
+      const frag = document.createDocumentFragment();
+
+      for (let i = 0; i < parts.length; i++) {
+        if (parts[i]) frag.appendChild(document.createTextNode(parts[i]));
+        if (i !== parts.length - 1) frag.appendChild(makeOursNode());
+      }
+      textNode.parentNode.replaceChild(frag, textNode);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderOursMacro(document);
+
+    const summaryVideoId = "summary-video-player";
+    const maxParallelLoads = 3;
+    let activeLoads = 0;
+    const pendingLoads = [];
+
+    const restrictedVideos = Array.from(document.querySelectorAll(".sim-aug-rollout-video, #design video, #gallery video"));
+    restrictedVideos.forEach((video) => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.loop = true;
+      video.playsInline = true;
+
+      video.setAttribute("muted", "");
+      video.setAttribute("loop", "");
+      video.setAttribute("playsinline", "");
+      video.removeAttribute("controls");
+      video.setAttribute("disablePictureInPicture", "");
+      video.setAttribute("controlsList", "nodownload noplaybackrate noremoteplayback nofullscreen");
+      video.setAttribute("tabindex", "-1");
+    });
+
+    function safePlay(video) {
+      const p = video.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {});
+      }
+    }
+
+    function ensureVideoLoadingOverlay(video) {
+      if (!video || !video.parentElement) {
+        return null;
+      }
+
+      let shell = video.parentElement;
+      if (!shell.classList.contains("video-loading-shell")) {
+        shell.classList.add("video-loading-shell");
+      }
+
+      let overlay = shell.querySelector(":scope > .video-loading-overlay");
+      if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.className = "video-loading-overlay";
+        overlay.setAttribute("aria-hidden", "true");
+        overlay.innerHTML = '<div class="video-loading-pill"><span class="video-loading-spinner"></span></div>';
+        shell.appendChild(overlay);
+      }
+
+      return shell;
+    }
+
+    function setVideoLoading(video, isLoading) {
+      const shell = ensureVideoLoadingOverlay(video);
+      if (!shell) {
+        return;
+      }
+      shell.classList.toggle("is-loading", !!isLoading);
+    }
+
+    function pumpVideoLoadQueue() {
+      while (activeLoads < maxParallelLoads && pendingLoads.length > 0) {
+        const next = pendingLoads.shift();
+        if (!next || next.dataset.videoReady === "1" || next.dataset.videoLoading === "1") {
+          continue;
+        }
+
+        const sources = Array.from(next.querySelectorAll("source[data-src]"));
+        if (sources.length === 0) {
+          next.dataset.videoReady = "1";
+          continue;
+        }
+
+        sources.forEach((source) => {
+          source.setAttribute("src", source.dataset.src);
+          source.removeAttribute("data-src");
+        });
+
+        activeLoads += 1;
+        next.dataset.videoLoading = "1";
+        setVideoLoading(next, true);
+        let finished = false;
+
+        const finishLoad = () => {
+          if (finished) {
+            return;
+          }
+          finished = true;
+          next.dataset.videoLoading = "0";
+          next.dataset.videoReady = "1";
+          activeLoads = Math.max(0, activeLoads - 1);
+          pumpVideoLoadQueue();
+        };
+
+        next.addEventListener("loadeddata", finishLoad, { once: true });
+        next.addEventListener("error", finishLoad, { once: true });
+        next.load();
+      }
+    }
+
+    function requestVideoLoad(video) {
+      if (!video || video.dataset.videoReady === "1" || video.dataset.videoLoading === "1") {
+        return;
+      }
+
+      if (!pendingLoads.includes(video)) {
+        pendingLoads.push(video);
+      }
+      setVideoLoading(video, true);
+      pumpVideoLoadQueue();
+    }
+
+    const allVideos = Array.from(document.querySelectorAll("video"));
+    const managedVideos = allVideos.filter((video) => video.id !== summaryVideoId);
+
+    allVideos.forEach((video) => {
+      ensureVideoLoadingOverlay(video);
+
+      video.addEventListener("loadstart", () => setVideoLoading(video, true));
+      video.addEventListener("waiting", () => setVideoLoading(video, true));
+      video.addEventListener("stalled", () => setVideoLoading(video, true));
+      video.addEventListener("seeking", () => setVideoLoading(video, true));
+
+      video.addEventListener("loadeddata", () => {
+        if (video.dataset.keepSpinnerUntilPlaying !== "1") {
+          setVideoLoading(video, false);
+        }
+      });
+      video.addEventListener("canplay", () => {
+        if (video.dataset.keepSpinnerUntilPlaying !== "1") {
+          setVideoLoading(video, false);
+        }
+      });
+      video.addEventListener("canplaythrough", () => setVideoLoading(video, false));
+      video.addEventListener("playing", () => setVideoLoading(video, false));
+      video.addEventListener("seeked", () => setVideoLoading(video, false));
+      video.addEventListener("error", () => setVideoLoading(video, false));
+    });
+
+    managedVideos.forEach((video) => {
+      const sourceWithSrc = Array.from(video.querySelectorAll("source[src]"));
+      sourceWithSrc.forEach((source) => {
+        source.setAttribute("data-src", source.getAttribute("src"));
+        source.removeAttribute("src");
+      });
+
+      const shouldAutoplay = video.hasAttribute("autoplay");
+      video.dataset.shouldAutoplay = shouldAutoplay ? "1" : "0";
+      video.dataset.keepSpinnerUntilPlaying = shouldAutoplay ? "1" : "0";
+      video.dataset.videoReady = "0";
+      video.dataset.videoInView = "0";
+      video.preload = "none";
+      if (shouldAutoplay) {
+        video.removeAttribute("autoplay");
+      }
+
+      video.addEventListener("loadeddata", () => {
+        if (video.dataset.shouldAutoplay === "1") {
+          try {
+            video.currentTime = 0;
+          } catch (e) {
+          }
+        }
+        if (video.dataset.shouldAutoplay === "1" && video.dataset.videoInView === "1") {
+          safePlay(video);
+        }
+      });
+    });
+
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        const shouldAutoplay = video.dataset.shouldAutoplay === "1";
+
+        if (entry.isIntersecting) {
+          video.dataset.videoInView = "1";
+          requestVideoLoad(video);
+          if (shouldAutoplay && video.dataset.videoReady === "1") {
+            safePlay(video);
+          }
+          return;
+        }
+
+        video.dataset.videoInView = "0";
+
+        if (shouldAutoplay) {
+          video.pause();
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: "220px 0px",
+      threshold: 0.2,
+    });
+
+    managedVideos.forEach((video) => {
+      videoObserver.observe(video);
+    });
+
+    const summaryVideo = document.getElementById("summary-video-player");
+    if (summaryVideo) {
+      const seekToThreeSeconds = () => {
+        try {
+          summaryVideo.currentTime = 3;
+        } catch (e) {
+        }
+      };
+      if (summaryVideo.readyState >= 1) {
+        seekToThreeSeconds();
+      } else {
+        summaryVideo.addEventListener("loadedmetadata", seekToThreeSeconds, { once: true });
+      }
+    }
+
+    const tocLinks = Array.from(document.querySelectorAll(".toc-sidebar a"));
+    const tocSections = tocLinks
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+
+    function setActiveTocById(id) {
+      tocLinks.forEach((link) => {
+        const isActive = link.getAttribute("href") === `#${id}`;
+        link.classList.toggle("active", isActive);
+      });
+    }
+
+    if (tocSections.length > 0) {
+      let isTicking = false;
+
+      function updateActiveTocByScroll() {
+        const activationOffset = Math.min(window.innerHeight * 0.28, 180);
+        let activeSection = tocSections[0];
+
+        for (const section of tocSections) {
+          if (section.getBoundingClientRect().top - activationOffset <= 0) {
+            activeSection = section;
+          } else {
+            break;
+          }
+        }
+
+        setActiveTocById(activeSection.id);
+      }
+
+      function requestTocUpdate() {
+        if (isTicking) return;
+        isTicking = true;
+        requestAnimationFrame(() => {
+          updateActiveTocByScroll();
+          isTicking = false;
+        });
+      }
+
+      updateActiveTocByScroll();
+      window.addEventListener("scroll", requestTocUpdate, { passive: true });
+      window.addEventListener("resize", requestTocUpdate);
+    }
+
+    tocLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        const targetId = (link.getAttribute("href") || "").replace("#", "");
+        if (targetId) {
+          setActiveTocById(targetId);
+          setTimeout(() => {
+            const section = document.getElementById(targetId);
+            if (section) {
+              setActiveTocById(section.id);
+            }
+          }, 300);
+        }
+      });
+    });
+  });
+
+</script>
+
+</body>
+</html>
